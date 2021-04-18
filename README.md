@@ -1,6 +1,6 @@
 # REACT NATIVE - CALCULADORA
 
-Es un clon de la calculadora de iOS hecha en React Native.
+Es un clon de la calculadora de iOS hecha en React Native con TypeScript.
 Del curso de Udemy de Fernando Herrera: https://www.udemy.com/course/react-native-fh/
 
 En cada branch se puede ver como va evolucionando el proyecto.
