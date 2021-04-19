@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
   fila: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 18,
+    marginBottom: 10,
     paddingHorizontal: 10,
   },
 });
