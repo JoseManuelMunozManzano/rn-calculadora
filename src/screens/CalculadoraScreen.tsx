@@ -1,16 +1,26 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Text, View} from 'react-native';
 
 import {BotonCalc} from '../components/BotonCalc';
 
 import {styles} from '../theme/appTheme';
 
+enum Operadores {
+  sumar,
+  restar,
+  multiplicar,
+  dividir,
+}
+
 export const CalculadoraScreen = () => {
   const [numeroAnterior, setNumeroAnterior] = useState('0');
   const [numero, setNumero] = useState('0');
 
+  const ultimaOperacion = useRef<Operadores>();
+
   const limpiar = () => {
     setNumero('0');
+    setNumeroAnterior('0');
   };
 
   const armarNumero = (numeroTexto: string) => {
@@ -38,15 +48,47 @@ export const CalculadoraScreen = () => {
 
   const btnDelete = () => {
     if (numero.length === 1 || (numero.length === 2 && numero.includes('-'))) {
-      return limpiar();
+      setNumero('0');
+    } else {
+      setNumero(numero.slice(0, -1));
     }
+  };
 
-    setNumero(numero.slice(0, -1));
+  const cambiarNumPorAnterior = () => {
+    if (numero.endsWith('.')) {
+      setNumeroAnterior(numero.slice(0, -1));
+    } else {
+      setNumeroAnterior(numero);
+    }
+    setNumero('0');
+  };
+
+  const btnDividir = () => {
+    cambiarNumPorAnterior();
+    ultimaOperacion.current = Operadores.dividir;
+  };
+
+  const btnMutiplicar = () => {
+    cambiarNumPorAnterior();
+    ultimaOperacion.current = Operadores.multiplicar;
+  };
+
+  const btnRestar = () => {
+    cambiarNumPorAnterior();
+    ultimaOperacion.current = Operadores.restar;
+  };
+
+  const btnSumar = () => {
+    cambiarNumPorAnterior();
+    ultimaOperacion.current = Operadores.sumar;
   };
 
   return (
     <View style={styles.calculadoraContainer}>
-      <Text style={styles.resultadoPequeno}>{numeroAnterior}</Text>
+      {numeroAnterior !== '0' && (
+        <Text style={styles.resultadoPequeno}>{numeroAnterior}</Text>
+      )}
+
       <Text style={styles.resultado} numberOfLines={1} adjustsFontSizeToFit>
         {numero}
       </Text>
@@ -56,7 +98,7 @@ export const CalculadoraScreen = () => {
         <BotonCalc texto="C" color="#9b9b9b" accion={limpiar} />
         <BotonCalc texto="+/-" color="#9b9b9b" accion={positivoNegativo} />
         <BotonCalc texto="del" color="#9b9b9b" accion={btnDelete} />
-        <BotonCalc texto="/" color="#ff9427" accion={limpiar} />
+        <BotonCalc texto="/" color="#ff9427" accion={btnDividir} />
       </View>
 
       {/* Fila de botones  */}
@@ -64,7 +106,7 @@ export const CalculadoraScreen = () => {
         <BotonCalc texto="7" accion={armarNumero} />
         <BotonCalc texto="8" accion={armarNumero} />
         <BotonCalc texto="9" accion={armarNumero} />
-        <BotonCalc texto="X" color="#ff9427" accion={limpiar} />
+        <BotonCalc texto="X" color="#ff9427" accion={btnMutiplicar} />
       </View>
 
       {/* Fila de botones  */}
@@ -72,7 +114,7 @@ export const CalculadoraScreen = () => {
         <BotonCalc texto="4" accion={armarNumero} />
         <BotonCalc texto="5" accion={armarNumero} />
         <BotonCalc texto="6" accion={armarNumero} />
-        <BotonCalc texto="-" color="#ff9427" accion={limpiar} />
+        <BotonCalc texto="-" color="#ff9427" accion={btnRestar} />
       </View>
 
       {/* Fila de botones  */}
@@ -80,7 +122,7 @@ export const CalculadoraScreen = () => {
         <BotonCalc texto="1" accion={armarNumero} />
         <BotonCalc texto="2" accion={armarNumero} />
         <BotonCalc texto="3" accion={armarNumero} />
-        <BotonCalc texto="+" color="#ff9427" accion={limpiar} />
+        <BotonCalc texto="+" color="#ff9427" accion={btnSumar} />
       </View>
 
       {/* Fila de botones  */}
