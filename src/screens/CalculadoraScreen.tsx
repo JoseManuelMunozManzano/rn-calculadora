@@ -14,7 +14,24 @@ export const CalculadoraScreen = () => {
   };
 
   const armarNumero = (numeroTexto: string) => {
-    setNumero(numero + numeroTexto);
+    // No aceptar doble punto
+    if (numero.includes('.') && numeroTexto === '.') {
+      return;
+    }
+
+    setNumero(
+      numero !== '0' || numeroTexto === '.'
+        ? numero + numeroTexto
+        : numeroTexto,
+    );
+  };
+
+  const positivoNegativo = () => {
+    if (numero.includes('-')) {
+      setNumero(numero.replace('-', ''));
+    } else {
+      setNumero('-' + numero);
+    }
   };
 
   return (
@@ -27,7 +44,7 @@ export const CalculadoraScreen = () => {
       {/* Fila de botones  */}
       <View style={styles.fila}>
         <BotonCalc texto="C" color="#9b9b9b" accion={limpiar} />
-        <BotonCalc texto="+/-" color="#9b9b9b" accion={limpiar} />
+        <BotonCalc texto="+/-" color="#9b9b9b" accion={positivoNegativo} />
         <BotonCalc texto="del" color="#9b9b9b" accion={limpiar} />
         <BotonCalc texto="/" color="#ff9427" accion={limpiar} />
       </View>
