@@ -20,8 +20,10 @@ export const CalculadoraScreen = () => {
     }
 
     setNumero(
-      numero !== '0' || numeroTexto === '.'
+      (numero !== '0' && numero !== '-0') || numeroTexto === '.'
         ? numero + numeroTexto
+        : numero === '-0'
+        ? '-' + numeroTexto
         : numeroTexto,
     );
   };
@@ -32,6 +34,14 @@ export const CalculadoraScreen = () => {
     } else {
       setNumero('-' + numero);
     }
+  };
+
+  const btnDelete = () => {
+    if (numero.length === 1 || (numero.length === 2 && numero.includes('-'))) {
+      return limpiar();
+    }
+
+    setNumero(numero.slice(0, -1));
   };
 
   return (
@@ -45,7 +55,7 @@ export const CalculadoraScreen = () => {
       <View style={styles.fila}>
         <BotonCalc texto="C" color="#9b9b9b" accion={limpiar} />
         <BotonCalc texto="+/-" color="#9b9b9b" accion={positivoNegativo} />
-        <BotonCalc texto="del" color="#9b9b9b" accion={limpiar} />
+        <BotonCalc texto="del" color="#9b9b9b" accion={btnDelete} />
         <BotonCalc texto="/" color="#ff9427" accion={limpiar} />
       </View>
 
