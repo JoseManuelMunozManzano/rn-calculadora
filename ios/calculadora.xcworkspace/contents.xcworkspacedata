@@ -2,9 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:calculadora.xcodeproj">
+      location = "group:/Users/jmmm/Programacion/ReactNative/Udemy-FHerrera/00-Projects/03-calculadora/ios/calculadora.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:calculadora.xcodeproj">
    </FileRef>
 </Workspace>

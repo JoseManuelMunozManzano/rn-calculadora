@@ -145,7 +145,6 @@
 				4A4001A704BD93B2630117CF /* Pods-calculadora-calculadoraTests.debug.xcconfig */,
 				85F53BD49537AA999C0CBEE2 /* Pods-calculadora-calculadoraTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
